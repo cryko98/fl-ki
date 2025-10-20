@@ -56,11 +56,16 @@
         #dexscreener-embed{
             position:relative;
             width:100%;
-            padding-bottom:125%;
+            padding-bottom:125%; /* Default for smaller screens */
+        }
+        @media(min-width:768px){ /* md breakpoint */
+             #dexscreener-embed{
+                padding-bottom:100%; /* Better ratio for tablet */
+            }
         }
         @media(min-width:1400px){
             #dexscreener-embed{
-                padding-bottom:65%;
+                padding-bottom:65%; /* Desktop ratio */
             }
         }
         #dexscreener-embed iframe{
@@ -103,7 +108,6 @@
         .marquee-content {
             display: inline-block;
             padding-left: 100%;
-            /* Decreased animation speed slightly since text is shorter */
             animation: marquee 15s linear infinite; 
         }
         @keyframes marquee {
@@ -116,19 +120,20 @@
 
     <!-- Header (Mock X Top Bar) - Sticky and yellow-bordered --><header class="w-full border-b-4 border-primary-yellow p-3 sticky top-0 bg-x-dark/95 backdrop-blur-sm z-10 shadow-2xl shadow-primary-yellow/50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Left Side: Logo and CA Display --><div class="flex items-center space-x-4">
-                <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-3xl font-black text-secondary-white hover:text-primary-yellow transition duration-200 tracking-tighter" aria-label="Go to 𝕏 Community">𝕏</a>
+            <!-- Left Side: Logo and CA Display --><div class="flex items-center space-x-2 sm:space-x-4">
+                <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-2xl sm:text-3xl font-black text-secondary-white hover:text-primary-yellow transition duration-200 tracking-tighter" aria-label="Go to 𝕏 Community">𝕏</a>
                 
-                <!-- Contract Address Display and Copy Button in Header - YELLOW ACCENT --><div class="flex items-center text-xs px-3 py-1 bg-x-card/50 rounded-full text-x-grey border-2 border-primary-yellow overflow-hidden shadow-md shadow-primary-yellow/40">
-                    <span class="font-bold mr-2 whitespace-nowrap text-primary-yellow hidden sm:inline">CA:</span>
-                    <span id="ca-display" class="font-mono text-secondary-white text-[10px] md:text-xs whitespace-nowrap">0x4444c1aC17b779b221E410a94F218f44b8862101</span>
+                <!-- Contract Address Display and Copy Button in Header - YELLOW ACCENT --><div class="flex items-center text-xs px-2 py-1 bg-x-card/50 rounded-full text-x-grey border-2 border-primary-yellow overflow-hidden shadow-md shadow-primary-yellow/40">
+                    <span class="font-bold mr-1 whitespace-nowrap text-primary-yellow hidden sm:inline">CA:</span>
+                    <!-- Aggressively small font on mobile to ensure it fits -->
+                    <span id="ca-display" class="font-mono text-secondary-white text-[9px] sm:text-[10px] md:text-xs whitespace-nowrap">0x4444c1aC17b779b221E410a94F218f44b8862101</span>
                     <button 
                         id="header-copy-btn" 
                         onclick="copyAddress()" 
-                        class="ml-2 p-1 rounded-full text-primary-yellow hover:bg-zinc-700 transition duration-200 flex-shrink-0"
+                        class="ml-1 p-1 rounded-full text-primary-yellow hover:bg-zinc-700 transition duration-200 flex-shrink-0"
                         title="Copy Address"
                     >
-                        <!-- Copy Icon --><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V5"></path></svg>
+                        <!-- Copy Icon --><svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V5"></path></svg>
                     </button>
                 </div>
             </div>
@@ -143,12 +148,15 @@
             </button>
 
 
-            <!-- Right Side: Navigation --><nav class="flex space-x-4 text-sm font-extrabold text-secondary-white">
+            <!-- Right Side: Navigation -->
+            <!-- Using smaller font and wrapping for better mobile fit -->
+            <nav class="flex space-x-2 text-xs sm:text-sm font-extrabold text-secondary-white flex-wrap justify-end">
                 <!-- Navigation Links with yellow hover effect -->
                 <a href="#ceo" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="boss">THE BOSS</a>
                 <a href="#lore" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="lore">THE LORE</a>
-                <a href="#featured-post" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="announcement">ANNOUNCEMENT</a>
-                <a href="#gallery" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="memes">MEMES</a>
+                <!-- Hidden on very small screens to prioritize space -->
+                <a href="#featured-post" class="hidden sm:inline hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="announcement">ANNOUNCEMENT</a>
+                <a href="#gallery" class="hidden sm:inline hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="memes">MEMES</a>
                 <a href="#chart" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="chart">THE CHART</a>
             </nav>
         </div>
@@ -156,97 +164,100 @@
 
     <!-- CHAOS MARQUEE BAR - Yellow background, black text --><div class="w-full bg-primary-yellow text-x-dark text-center font-extrabold py-1 border-b-4 border-x-dark">
         <div class="marquee">
-            <span class="marquee-content text-sm md:text-lg" data-i18n="marquee">
+            <span class="marquee-content text-xs sm:text-sm md:text-lg" data-i18n="marquee">
                 ELON MUSK HAS CHOSEN! THE OFFICIAL X CEO: $FLŌKI. THE MEME BOSS OF THE BNB CHAIN! GRAB $FLŌKI NOW! ELON MUSK HAS CHOSEN! THE OFFICIAL X CEO: $FLŌKI. THE MEME BOSS OF THE BNB CHAIN! GRAB $FLŌKI NOW! 
             </span>
         </div>
     </div>
     
-    <!-- Main Content Container --><main class="w-full max-w-6xl px-4 py-12">
+    <!-- Main Content Container --><main class="w-full max-w-6xl px-4 py-8 sm:py-12">
 
-        <!-- CEO & Headline Section - INTENSE Layout --><section id="ceo" class="flex flex-col gap-10 items-center justify-center mb-16">
+        <!-- CEO & Headline Section - INTENSE Layout --><section id="ceo" class="flex flex-col gap-8 sm:gap-10 items-center justify-center mb-12 sm:mb-16">
             
             <!-- Two main columns (Headline and Image) -->
-            <div class="flex flex-col lg:flex-row gap-10 items-center justify-center w-full"> 
+            <div class="flex flex-col lg:flex-row gap-8 sm:gap-10 items-center justify-center w-full"> 
                 <!-- Column 1: Headline, CTA (Left on desktop) --><div class="w-full lg:w-1/2 order-2 lg:order-1">
-                    <h2 class="text-7xl md:text-8xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-secondary-white to-primary-yellow drop-shadow-neon" data-i18n="headline">
+                    <!-- Adjusted font sizes for mobile (text-5xl) -->
+                    <h2 class="text-5xl sm:text-7xl md:text-8xl font-black leading-tight sm:leading-none text-transparent bg-clip-text bg-gradient-to-r from-secondary-white to-primary-yellow drop-shadow-neon" data-i18n="headline">
                         THE X CEO IS <span class="text-primary-yellow">$FLŌKI</span>
                     </h2>
-                    <!-- New opening text as requested --><p class="text-2xl font-bold mt-6 text-secondary-white" data-i18n="subtext_1">
+                    <!-- Adjusted subtext font sizes for mobile (text-lg) -->
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold mt-4 sm:mt-6 text-secondary-white" data-i18n="subtext_1">
                         Elon Musk has officially announced the new CEO of X, and it's the memetic legend: Flōki. This token is the BNB Chain's tribute to that historic moment.
                     </p>
-                    <p class="text-2xl font-bold mt-2 text-primary-yellow animate-pulse" data-i18n="subtext_2">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold mt-2 text-primary-yellow animate-pulse" data-i18n="subtext_2">
                         The leadership has spoken. The new era is here.
                     </p>
-                    <!-- Buy Button --><button onclick="scrollToChart()" class="mt-8 px-12 py-4 bg-primary-yellow text-x-dark font-extrabold rounded-full transition duration-300 transform hover:scale-110 meme-button-glow w-full lg:w-auto uppercase tracking-widest border-2 border-x-dark" data-i18n="buy_button">
+                    <!-- Buy Button - w-full is already good for mobile --><button onclick="scrollToChart()" class="mt-6 sm:mt-8 px-8 sm:px-12 py-3 sm:py-4 bg-primary-yellow text-x-dark font-extrabold rounded-full transition duration-300 transform hover:scale-110 meme-button-glow w-full lg:w-auto uppercase tracking-widest border-2 border-x-dark text-base sm:text-lg" data-i18n="buy_button">
                         BUY $FLŌKI NOW
                     </button>
                 </div>
 
                 <!-- Column 2: Image Card (Right on desktop) --><div class="w-full lg:w-1/2 order-1 lg:order-2">
                     
-                    <!-- Image Card --><div class="p-6 bg-x-card/70 rounded-3xl shadow-2xl border-4 border-primary-yellow transition duration-500 hover:border-secondary-white">
-                        <h1 class="text-4xl font-extrabold mb-4 text-center text-primary-yellow" data-i18n="official_photo">OFFICIAL CEO PHOTO</h1>
+                    <!-- Image Card --><div class="p-4 sm:p-6 bg-x-card/70 rounded-3xl shadow-2xl border-4 border-primary-yellow transition duration-500 hover:border-secondary-white">
+                        <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 sm:mb-4 text-center text-primary-yellow" data-i18n="official_photo">OFFICIAL CEO PHOTO</h1>
                         <!-- Image with intense border/glow on hover --><img 
                             src="https://pbs.twimg.com/media/G3tISGVXUAASLct?format=png&name=small" 
                             alt="Flōki the Dog, CEO of 𝕏" 
                             class="w-full h-auto object-cover rounded-2xl border-4 border-x-dark shadow-2xl shadow-primary-yellow/60 transition duration-500 hover:scale-[1.02] hover:border-primary-yellow"
                             onerror="this.src='https://placehold.co/600x600/FCD535/000000?text=CEO+NOT+FOUND';"
                         >
-                        <p class="text-center text-sm mt-3 text-secondary-white font-bold italic" data-i18n="photo_source">Source: The Man, The Legend, The Owner.</p>
+                        <p class="text-center text-xs sm:text-sm mt-3 text-secondary-white font-bold italic" data-i18n="photo_source">Source: The Man, The Legend, The Owner.</p>
                     </div>
 
                 </div>
             </div>
 
-            <!-- NEW: Metrics Panel - Full Width at the bottom of the section -->
-            <div id="metrics-panel" class="w-full mt-8 p-6 bg-x-card/70 rounded-2xl border-4 border-primary-yellow shadow-xl shadow-primary-yellow/50">
-                <h3 class="text-xl font-extrabold text-primary-yellow mb-4 text-center" data-i18n="metrics_header">LIVE TOKEN METRICS (2 MINUTE REFRESH)</h3>
-                <!-- Full width, 3 column grid for longitudinal display. Divides separate metrics. -->
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 text-center text-sm md:text-base divide-x divide-x-grey"> 
+            <!-- NEW: Metrics Panel - Optimized for 3 columns on mobile -->
+            <div id="metrics-panel" class="w-full mt-4 sm:mt-8 p-4 sm:p-6 bg-x-card/70 rounded-2xl border-4 border-primary-yellow shadow-xl shadow-primary-yellow/50">
+                <h3 class="text-base sm:text-xl font-extrabold text-primary-yellow mb-4 text-center" data-i18n="metrics_header">LIVE TOKEN METRICS (2 MINUTE REFRESH)</h3>
+                <!-- Fixed 3-column grid for mobile/desktop with smaller gaps and text -->
+                <div class="grid grid-cols-3 gap-2 text-center text-sm divide-x divide-x-grey"> 
                     <!-- Market Cap -->
-                    <div class="p-2">
-                        <p class="text-x-grey uppercase text-xs" data-i18n="metric_mc">Market Cap</p>
-                        <p id="metric-mc" class="text-xl font-bold text-secondary-white">--</p>
+                    <div class="p-1 sm:p-2">
+                        <p class="text-x-grey uppercase text-[9px] sm:text-xs" data-i18n="metric_mc">Market Cap</p>
+                        <p id="metric-mc" class="text-base sm:text-xl font-bold text-secondary-white">--</p>
                     </div>
                     <!-- 24h Volume -->
-                    <div class="p-2">
-                        <p class="text-x-grey uppercase text-xs" data-i18n="metric_volume">24H Volume</p>
-                        <p id="metric-volume" class="text-xl font-bold text-primary-yellow">--</p>
+                    <div class="p-1 sm:p-2">
+                        <p class="text-x-grey uppercase text-[9px] sm:text-xs" data-i18n="metric_volume">24H Volume</p>
+                        <p id="metric-volume" class="text-base sm:text-xl font-bold text-primary-yellow">--</p>
                     </div>
                     <!-- Liquidity -->
-                    <div class="p-2">
-                        <p class="text-x-grey uppercase text-xs" data-i18n="metric_liquidity">Liquidity</p>
-                        <p id="metric-liquidity" class="text-xl font-bold text-secondary-white">--</p>
+                    <div class="p-1 sm:p-2">
+                        <p class="text-x-grey uppercase text-[9px] sm:text-xs" data-i18n="metric_liquidity">Liquidity</p>
+                        <p id="metric-liquidity" class="text-base sm:text-xl font-bold text-secondary-white">--</p>
                     </div>
                 </div>
             </div>
 
         </section>
 
-        <!-- Featured Post Section (Embedded Tweet) - STRONG HIGHLIGHT --><section id="featured-post" class="mb-16 pt-10 border-t-4 border-primary-yellow">
-            <div class="text-center mb-8">
+        <!-- Featured Post Section (Embedded Tweet) - STRONG HIGHLIGHT --><section id="featured-post" class="mb-12 sm:mb-16 pt-8 sm:pt-10 border-t-4 border-primary-yellow">
+            <div class="text-center mb-6 sm:mb-8">
                 <!-- NEW TITLE STYLE: Solid yellow background, black text -->
-                <h2 class="text-3xl font-extrabold text-x-dark inline-block px-4 py-2 bg-primary-yellow rounded-lg" data-i18n="musk_announcement">ELON MUSK'S HISTORIC ANNOUNCEMENT</h2>
+                <h2 class="text-xl sm:text-3xl font-extrabold text-x-dark inline-block px-3 py-1 sm:px-4 sm:py-2 bg-primary-yellow rounded-lg" data-i18n="musk_announcement">ELON MUSK'S HISTORIC ANNOUNCEMENT</h2>
             </div>
             
             <!-- Embedded Tweet Block with glowing border and explicit border class --><div class="flex justify-center">
-                <blockquote class="twitter-tweet w-full max-w-md bg-x-card rounded-xl tweet-highlight border-4 border-primary-yellow" data-dnt="true" data-theme="dark">
+                <!-- Max width ensures it doesn't break small screens -->
+                <blockquote class="twitter-tweet w-full max-w-xs sm:max-w-md bg-x-card rounded-xl tweet-highlight border-4 border-primary-yellow" data-dnt="true" data-theme="dark">
                     <!-- The specific tweet URL --><a href="https://twitter.com/elonmusk/status/1980216257069945132"></a>
                 </blockquote>
             </div>
         </section>
         
-        <!-- LORE/ABOUT SECTION (MOVED UP AND STYLED) --><section class="pt-8 mb-16 border-t-4 border-primary-yellow">
-            <div id="lore" class="bg-x-card p-8 rounded-3xl border-4 border-primary-yellow shadow-2xl shadow-primary-yellow/50 transition duration-500 mx-auto">
+        <!-- LORE/ABOUT SECTION (MOVED UP AND STYLED) --><section class="pt-8 mb-12 sm:mb-16 border-t-4 border-primary-yellow">
+            <div id="lore" class="bg-x-card p-6 sm:p-8 rounded-3xl border-4 border-primary-yellow shadow-2xl shadow-primary-yellow/50 transition duration-500 mx-auto">
                 
                 <div class="text-center mb-6">
                     <!-- NEW TITLE STYLE: Solid yellow background, black text -->
-                    <h2 class="text-4xl font-black text-x-dark uppercase inline-block px-4 py-2 bg-primary-yellow rounded-lg" data-i18n="lore_title">THE RISE OF CEO FLŌKI</h2>
+                    <h2 class="text-2xl sm:text-4xl font-black text-x-dark uppercase inline-block px-3 py-1 sm:px-4 sm:py-2 bg-primary-yellow rounded-lg" data-i18n="lore_title">THE RISE OF CEO FLŌKI</h2>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-8 items-start">
-                    <!-- Lore Image (Left Side) - Now 1:1 Aspect Ratio --><div class="w-full md:w-1/3 flex-shrink-0">
+                <div class="flex flex-col md:flex-row gap-6 sm:gap-8 items-start">
+                    <!-- Lore Image (Left Side) --><div class="w-full md:w-1/3 flex-shrink-0">
                         <div class="relative w-full pb-[100%] rounded-xl overflow-hidden border-4 border-x-dark shadow-lg shadow-primary-yellow/50">
                             <img 
                                 src="https://pbs.twimg.com/media/G3uJ2tsWoAAxexx?format=jpg&name=large" 
@@ -257,14 +268,16 @@
                         </div>
                     </div>
 
-                    <!-- Lore Text (Right Side) --><div class="w-full md:w-2/3">
-                        <p class="text-secondary-white leading-relaxed font-bold mb-4 text-lg" data-i18n="lore_p1">
+                    <!-- Lore Text (Right Side) -->
+                    <div class="w-full md:w-2/3">
+                        <!-- Adjusted font sizes for mobile -->
+                        <p class="text-sm sm:text-lg text-secondary-white leading-relaxed font-bold mb-3 sm:mb-4" data-i18n="lore_p1">
                             On Elon Musk’s X platform, a new leader was crowned. Flōki, the Shiba Inu, was appointed CEO, symbolizing a shift towards memetic and decentralized culture. We have tokenized this monumental corporate takeover and brought it to the BNB Chain.
                         </p>
-                        <p class="text-secondary-white leading-relaxed font-bold mb-6 text-lg" data-i18n="lore_p2">
+                        <p class="text-sm sm:text-lg text-secondary-white leading-relaxed font-bold mb-4 sm:mb-6" data-i18n="lore_p2">
                             $FLŌKI is not just a digital asset; it is your new boss. By holding $FLŌKI, you are a shareholder in the CEO’s vision, and you officially report to the Chief Memetic Officer. Join the leadership team.
                         </p>
-                        <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-primary-yellow hover:underline font-black inline-block text-xl transform hover:scale-105 transition" data-i18n="lore_join">JOIN THE REVOLUTION NOW →</a>
+                        <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-primary-yellow hover:underline font-black inline-block text-base sm:text-xl transform hover:scale-105 transition" data-i18n="lore_join">JOIN THE REVOLUTION NOW →</a>
                     </div>
                 </div>
 
@@ -272,12 +285,13 @@
         </section>
 
 
-        <!-- Image Gallery Section - Meme Grid (MOVED HERE) --><section id="gallery" class="mb-16 pt-10 border-t-4 border-primary-yellow">
-            <div class="text-center mb-8">
+        <!-- Image Gallery Section - Meme Grid (MOVED HERE) --><section id="gallery" class="mb-12 sm:mb-16 pt-8 sm:pt-10 border-t-4 border-primary-yellow">
+            <div class="text-center mb-6 sm:mb-8">
                 <!-- NEW TITLE STYLE: Solid yellow background, black text -->
-                <h2 class="text-3xl font-extrabold text-x-dark inline-block px-4 py-2 bg-primary-yellow rounded-lg" data-i18n="memes_header">MEMES & SHOTS FIRED</h2>
+                <h2 class="text-xl sm:text-3xl font-extrabold text-x-dark inline-block px-3 py-1 sm:px-4 sm:py-2 bg-primary-yellow rounded-lg" data-i18n="memes_header">MEMES & SHOTS FIRED</h2>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Grid is responsive: 2 columns on small, 4 on medium+ -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 <img src="https://pbs.twimg.com/media/G3tEj4CXkAA2n9O?format=jpg&name=small" alt="Floki meme moment 1" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
                 <img src="https://pbs.twimg.com/media/G3tEC2TXoAE8Jcn?format=jpg&name=small" alt="Floki meme moment 2" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
                 <img src="https://pbs.twimg.com/media/G3s_arKWwAA8MmM?format=jpg&name=small" alt="Floki meme moment 3" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
@@ -286,27 +300,27 @@
         </section>
 
 
-        <!-- Live Chart Section (Full Width, Prominent) --><section id="chart" class="pt-10 mb-16 border-t-4 border-primary-yellow">
-            <div class="text-center mb-6">
+        <!-- Live Chart Section (Full Width, Prominent) --><section id="chart" class="pt-8 sm:pt-10 mb-12 sm:mb-16 border-t-4 border-primary-yellow">
+            <div class="text-center mb-4 sm:mb-6">
                 <!-- NEW TITLE STYLE: Solid yellow background, black text -->
-                <h2 class="text-4xl font-black text-x-dark drop-shadow-lg inline-block px-4 py-2 bg-primary-yellow rounded-lg" data-i18n="chart_header">LIVE CHART - WHERE THE MAGIC HAPPENS</h2>
+                <h2 class="text-2xl sm:text-4xl font-black text-x-dark drop-shadow-lg inline-block px-3 py-1 sm:px-4 sm:py-2 bg-primary-yellow rounded-lg" data-i18n="chart_header">LIVE CHART - WHERE THE MAGIC HAPPENS</h2>
             </div>
-            <div class="bg-x-card p-4 rounded-3xl border-8 border-primary-yellow shadow-[0_0_50px_rgba(252,213,53,0.7)]">
-                <!-- Dexscreener Embed --><div id="dexscreener-embed">
+            <div class="bg-x-card p-2 sm:p-4 rounded-3xl border-8 border-primary-yellow shadow-[0_0_50px_rgba(252,213,53,0.7)]">
+                <!-- Dexscreener Embed (CSS handles responsiveness) --><div id="dexscreener-embed">
                     <iframe src="https://dexscreener.com/bsc/0x413581B5Ca80819C16f71B78712234e0d362dfad?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
                 </div>
             </div>
             
             <!-- Quick links below the chart -->
-            <div class="mt-8 flex flex-col justify-center space-y-4 font-extrabold">
+            <div class="mt-6 sm:mt-8 flex flex-col justify-center space-y-3 sm:space-y-4 font-extrabold">
                 <!-- First row: Chart View Button -->
                 <div class="flex justify-center">
-                    <a href="https://dexscreener.com/bsc/0x413581B5Ca80819C16f71B78712234e0d362dfad" target="_blank" class="text-secondary-white text-lg hover:text-x-dark p-3 rounded-xl bg-x-card border-2 border-primary-yellow hover:bg-primary-yellow transition transform hover:scale-105 text-center w-full max-w-sm" data-i18n="chart_full">FULL CHART VIEW</a>
+                    <a href="https://dexscreener.com/bsc/0x413581B5Ca80819C16f71B78712234e0d362dfad" target="_blank" class="text-secondary-white text-base sm:text-lg hover:text-x-dark p-3 rounded-xl bg-x-card border-2 border-primary-yellow hover:bg-primary-yellow transition transform hover:scale-105 text-center w-full max-w-xs sm:max-w-sm" data-i18n="chart_full">FULL CHART VIEW</a>
                 </div>
 
-                <!-- Second row: Buy Buttons (PancakeSwap and KyberSwap) -->
-                <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8 mt-4">
-                    <a href="https://pancakeswap.finance/swap?outputCurrency=0x4444c1aC17b779b221E410a94F218f44b8862101&chainId=56" target="_blank" class="text-x-dark text-lg hover:text-secondary-white p-3 rounded-xl bg-primary-yellow border-2 border-x-dark hover:bg-yellow-700 transition transform hover:scale-105 text-center w-full md:w-auto max-w-sm md:max-w-none" data-i18n="chart_buy_pancake">BUY ON PANCAKESWAP</a>
+                <!-- Second row: Buy Buttons (PancakeSwap) -->
+                <div class="flex flex-col justify-center space-y-3 md:space-y-0 md:space-x-8 mt-4">
+                    <a href="https://pancakeswap.finance/swap?outputCurrency=0x4444c1aC17b779b221E410a94F218f44b8862101&chainId=56" target="_blank" class="text-x-dark text-base sm:text-lg hover:text-secondary-white p-3 rounded-xl bg-primary-yellow border-2 border-x-dark hover:bg-yellow-700 transition transform hover:scale-105 text-center w-full max-w-xs sm:max-w-sm mx-auto" data-i18n="chart_buy_pancake">BUY ON PANCAKESWAP</a>
                     
                 </div>
             </div>
@@ -314,7 +328,7 @@
         
     </main>
 
-    <!-- Footer (SIMPLIFIED) --><footer class="w-full mt-16 py-6 border-t border-primary-yellow text-center text-sm text-secondary-white bg-accent-dark">
+    <!-- Footer (SIMPLIFIED) --><footer class="w-full mt-12 sm:mt-16 py-4 sm:py-6 border-t border-primary-yellow text-center text-xs sm:text-sm text-secondary-white bg-accent-dark">
         <p data-i18n="footer_copyright">&copy; 2025 Flōki, CEO of 𝕏. All Rights Reserved.</p>
     </footer>
 
@@ -323,8 +337,8 @@
     <!-- JavaScript for Copy Functionality and i18n --><script>
         // Define the token address globally for the copy function
         const TOKEN_ADDRESS = '0x4444c1aC17b779b221E410a94F218f44b8862101';
-        const ORIGINAL_COPY_ICON = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V5"></path></svg>`;
-        const COPIED_ICON = `<svg class="w-4 h-4 text-primary-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        const ORIGINAL_COPY_ICON = `<svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V5"></path></svg>`;
+        const COPIED_ICON = `<svg class="w-3 h-3 sm:w-4 sm:h-4 text-primary-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
 
         // Dexscreener API endpoint configuration (FIXED ADDRESS)
         const DEXSCREENER_API_URL = 'https://api.dexscreener.com/latest/dex/pairs/bsc/0x413581B5Ca80819C16f71B78712234e0d362dfad'; 
@@ -360,7 +374,6 @@
                 // NEW METRICS TRANSLATIONS
                 metrics_header: 'LIVE TOKEN METRICS (2 MINUTE REFRESH)',
                 metric_mc: 'Market Cap',
-                // metric_holders: 'Holders', // Removed
                 metric_volume: '24H Volume',
                 metric_liquidity: 'Liquidity',
             },
@@ -393,7 +406,6 @@
                 // NEW METRICS TRANSLATIONS
                 metrics_header: '实时代币指标 (2 分钟刷新)',
                 metric_mc: '市值',
-                // metric_holders: '持有者', // Removed
                 metric_volume: '24小时交易量',
                 metric_liquidity: '流动性',
             }
@@ -434,7 +446,6 @@
                     
                     // 2. Extract and update real data (Only using metrics available via Dexscreener)
                     document.getElementById('metric-mc').textContent = '$' + formatNumber(pair.marketCap);
-                    // Holders metric removed as requested
                     document.getElementById('metric-volume').textContent = '$' + formatNumber(pair.volume.h24);
                     document.getElementById('metric-liquidity').textContent = '$' + formatNumber(pair.liquidity.usd);
                     console.log("Token metrics updated with REAL data.");
@@ -500,7 +511,10 @@
             currentLang = currentLang === 'en' ? 'zh' : 'en';
             applyTranslations();
             // Re-run tweet widget script to ensure the embedded tweet respects the language change
-            twttr.widgets.load(); 
+            // Check if twttr is defined before calling
+            if (typeof twttr !== 'undefined' && twttr.widgets) {
+                twttr.widgets.load(); 
+            }
         }
 
         function copyAddress() {
