@@ -118,12 +118,16 @@
 </head>
 <body class="bg-x-dark text-secondary-white antialiased flex flex-col items-center">
 
-    <!-- Header (Mock X Top Bar) - Sticky and yellow-bordered --><header class="w-full border-b-4 border-primary-yellow p-3 sticky top-0 bg-x-dark/95 backdrop-blur-sm z-10 shadow-2xl shadow-primary-yellow/50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Left Side: Logo and CA Display --><div class="flex items-center space-x-2 sm:space-x-4">
+    <!-- Header (Mock X Top Bar) - Sticky and yellow-bordered -->
+    <header class="w-full border-b-4 border-primary-yellow p-3 sticky top-0 bg-x-dark/95 backdrop-blur-sm z-10 shadow-2xl shadow-primary-yellow/50">
+        <!-- JAVÍTOTT: flex-wrap és gap-2 hozzáadva. Képernyőn kívüli tartalom mobil nézetben új sorba kerül. -->
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <!-- Left Side: Logo and CA Display -->
+            <div class="flex items-center space-x-2 sm:space-x-4 order-1">
                 <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-2xl sm:text-3xl font-black text-secondary-white hover:text-primary-yellow transition duration-200 tracking-tighter" aria-label="Go to 𝕏 Community">𝕏</a>
                 
-                <!-- Contract Address Display and Copy Button in Header - YELLOW ACCENT --><div class="flex items-center text-xs px-2 py-1 bg-x-card/50 rounded-full text-x-grey border-2 border-primary-yellow overflow-hidden shadow-md shadow-primary-yellow/40">
+                <!-- Contract Address Display and Copy Button in Header - YELLOW ACCENT -->
+                <div class="flex items-center text-xs px-2 py-1 bg-x-card/50 rounded-full text-x-grey border-2 border-primary-yellow overflow-hidden shadow-md shadow-primary-yellow/40">
                     <span class="font-bold mr-1 whitespace-nowrap text-primary-yellow hidden sm:inline">CA:</span>
                     <!-- Aggressively small font on mobile to ensure it fits -->
                     <span id="ca-display" class="font-mono text-secondary-white text-[9px] sm:text-[10px] md:text-xs whitespace-nowrap">0x4444c1aC17b779b221E410a94F218f44b8862101</span>
@@ -138,10 +142,11 @@
                 </div>
             </div>
 
-            <!-- Language Switcher in the center --><button 
+            <!-- Language Switcher in the center -->
+            <button 
                 id="lang-toggle-btn" 
                 onclick="toggleLanguage()" 
-                class="hidden md:inline-block px-4 py-1.5 text-sm font-extrabold rounded-full bg-primary-yellow text-x-dark hover:bg-secondary-white transition duration-200 transform hover:scale-105"
+                class="hidden md:inline-block px-4 py-1.5 text-sm font-extrabold rounded-full bg-primary-yellow text-x-dark hover:bg-secondary-white transition duration-200 transform hover:scale-105 order-2"
                 data-i18n="lang_button"
             >
                 中文 / MANDARIN
@@ -149,8 +154,8 @@
 
 
             <!-- Right Side: Navigation -->
-            <!-- Using smaller font and wrapping for better mobile fit -->
-            <nav class="flex space-x-2 text-xs sm:text-sm font-extrabold text-secondary-white flex-wrap justify-end">
+            <!-- JAVÍTOTT: w-full order-3 és justify-center osztályok hozzáadva. Ez biztosítja, hogy mobil nézetben a nav új sorba kerüljön és középre igazodjon. -->
+            <nav class="w-full order-3 mt-2 sm:mt-0 sm:w-auto sm:order-none flex justify-center sm:justify-end space-x-2 text-xs sm:text-sm font-extrabold text-secondary-white flex-wrap">
                 <!-- Navigation Links with yellow hover effect -->
                 <a href="#ceo" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="boss">THE BOSS</a>
                 <a href="#lore" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="lore">THE LORE</a>
