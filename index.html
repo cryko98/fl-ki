@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">Flōki, CEO of 𝕏 | THE MEME HYPERSPACE</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use Inter font and the new black/white/Binance yellow scheme --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'x-dark': '#000000', // Black
+                        'x-card': '#16181C', // Very dark grey for cards
+                        'x-grey': '#71767B', // Grey secondary text (for subtle borders)
+                        // NEW BLACK/WHITE/YELLOW SCHEME (Using Binance Gold/Yellow)
+                        'primary-yellow': '#FCD535', // BINANCE YELLOW (Main accent)
+                        'secondary-white': '#FFFFFF', // WHITE (Primary text)
+                        'accent-dark': '#101010', // Slightly lighter black for footer/borders
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apply Inter font and the new abstract image background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Fallback color */
+            /* UPDATED BACKGROUND IMAGE: Black background with yellow X logo */
+            background-image: url('https://img.freepik.com/premium-vector/black-background-with-yellow-x-logo_811396-2155.jpg');
+            background-size: cover; /* Ensure the image covers the entire viewport */
+            background-attachment: fixed; /* Keep the background fixed during scroll */
+            background-position: center center;
+            min-height: 100vh;
+        }
+
+        /* Custom scrollbar to match dark theme, using yellow accent */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCD535; /* Primary Yellow Scrollbar */
+            border-radius: 10px;
+        }
+        
+        /* Ensure the embedded tweet widget is displayed correctly */
+        .twitter-tweet {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Dexscreener Embed Styles for large chart --- */
+        #dexscreener-embed{
+            position:relative;
+            width:100%;
+            padding-bottom:125%;
+        }
+        @media(min-width:1400px){
+            #dexscreener-embed{
+                padding-bottom:65%;
+            }
+        }
+        #dexscreener-embed iframe{
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0;
+            left:0;
+            border:0;
+        }
+        /* ------------------------------------------------ */
+
+        /* Animation for the primary button glow - now Binance yellow */
+        @keyframes intense-pulse {
+            /* Using the RGBA equivalent of #FCD535 (252, 213, 53) */
+            0% { box-shadow: 0 0 5px 0px rgba(252, 213, 53, 0.5); }
+            50% { box-shadow: 0 0 25px 5px rgba(252, 213, 53, 1); }
+            100% { box-shadow: 0 0 5px 0px rgba(252, 213, 53, 0.5); }
+        }
+        .meme-button-glow {
+            animation: intense-pulse 1.5s infinite ease-in-out;
+        }
+
+        /* ANIMATION FOR TWEET SECTION GLOW */
+        @keyframes tweet-glow {
+            0%, 100% { border-color: rgba(252, 213, 53, 0.5); box-shadow: 0 0 10px rgba(252, 213, 53, 0.3); }
+            50% { border-color: rgba(252, 213, 53, 1); box-shadow: 0 0 25px rgba(252, 213, 53, 0.7); }
+        }
+        .tweet-highlight {
+            animation: tweet-glow 2s infinite ease-in-out;
+            border-width: 3px; /* Ensure border is visible for glow */
+        }
+
+        /* MARQUEE EFFECT STYLES */
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            /* Decreased animation speed slightly since text is shorter */
+            animation: marquee 15s linear infinite; 
+        }
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+    </style>
+</head>
+<body class="bg-x-dark text-secondary-white antialiased flex flex-col items-center">
+
+    <!-- Header (Mock X Top Bar) - Sticky and yellow-bordered --><header class="w-full border-b-4 border-primary-yellow p-3 sticky top-0 bg-x-dark/95 backdrop-blur-sm z-10 shadow-2xl shadow-primary-yellow/50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Left Side: Logo and CA Display --><div class="flex items-center space-x-4">
+                <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-3xl font-black text-secondary-white hover:text-primary-yellow transition duration-200 tracking-tighter" aria-label="Go to 𝕏 Community">𝕏</a>
+                
+                <!-- Contract Address Display and Copy Button in Header - YELLOW ACCENT --><div class="flex items-center text-xs px-3 py-1 bg-x-card/50 rounded-full text-x-grey border-2 border-primary-yellow overflow-hidden shadow-md shadow-primary-yellow/40">
+                    <span class="font-bold mr-2 whitespace-nowrap text-primary-yellow hidden sm:inline">CA:</span>
+                    <span id="ca-display" class="font-mono text-secondary-white text-[10px] md:text-xs whitespace-nowrap">0x4444c1aC17b779b221E410a94F218f44b8862101</span>
+                    <button 
+                        id="header-copy-btn" 
+                        onclick="copyAddress()" 
+                        class="ml-2 p-1 rounded-full text-primary-yellow hover:bg-zinc-700 transition duration-200 flex-shrink-0"
+                        title="Copy Address"
+                    >
+                        <!-- Copy Icon --><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V5"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Language Switcher in the center --><button 
+                id="lang-toggle-btn" 
+                onclick="toggleLanguage()" 
+                class="hidden md:inline-block px-4 py-1.5 text-sm font-extrabold rounded-full bg-primary-yellow text-x-dark hover:bg-secondary-white transition duration-200 transform hover:scale-105"
+                data-i18n="lang_button"
+            >
+                中文 / MANDARIN
+            </button>
+
+
+            <!-- Right Side: Navigation --><nav class="flex space-x-4 text-sm font-extrabold text-secondary-white">
+                <!-- Navigation Links with yellow hover effect -->
+                <a href="#ceo" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="boss">THE BOSS</a>
+                <a href="#lore" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="lore">THE LORE</a>
+                <a href="#featured-post" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="announcement">ANNOUNCEMENT</a>
+                <a href="#gallery" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="memes">MEMES</a>
+                <a href="#chart" class="hover:text-primary-yellow transition duration-200 transform hover:scale-110" data-i18n="chart">THE CHART</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CHAOS MARQUEE BAR - Yellow background, black text --><div class="w-full bg-primary-yellow text-x-dark text-center font-extrabold py-1 border-b-4 border-x-dark">
+        <div class="marquee">
+            <span class="marquee-content text-sm md:text-lg" data-i18n="marquee">
+                ELON MUSK HAS CHOSEN! THE OFFICIAL X CEO: $FLŌKI. THE MEME BOSS OF THE BNB CHAIN! GRAB $FLŌKI NOW! ELON MUSK HAS CHOSEN! THE OFFICIAL X CEO: $FLŌKI. THE MEME BOSS OF THE BNB CHAIN! GRAB $FLŌKI NOW! 
+            </span>
+        </div>
+    </div>
+    
+    <!-- Main Content Container --><main class="w-full max-w-6xl px-4 py-12">
+
+        <!-- CEO & Headline Section - INTENSE Layout --><section id="ceo" class="flex flex-col lg:flex-row gap-10 items-center justify-center mb-16">
+            
+            <!-- Headline Text --><div class="w-full lg:w-1/2 order-2 lg:order-1">
+                <h2 class="text-7xl md:text-8xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-secondary-white to-primary-yellow drop-shadow-neon" data-i18n="headline">
+                    THE X CEO IS <span class="text-primary-yellow">$FLŌKI</span>
+                </h2>
+                <!-- New opening text as requested --><p class="text-2xl font-bold mt-6 text-secondary-white" data-i18n="subtext_1">
+                    Elon Musk has officially announced the new CEO of X, and it's the memetic legend: Flōki. This token is the BNB Chain's tribute to that historic moment.
+                </p>
+                <p class="text-2xl font-bold mt-2 text-primary-yellow animate-pulse" data-i18n="subtext_2">
+                    The leadership has spoken. The new era is here.
+                </p>
+                <!-- Buy Button --><button onclick="scrollToChart()" class="mt-8 px-12 py-4 bg-primary-yellow text-x-dark font-extrabold rounded-full transition duration-300 transform hover:scale-110 meme-button-glow w-full lg:w-auto uppercase tracking-widest border-2 border-x-dark" data-i18n="buy_button">
+                    BUY $FLŌKI NOW
+                </button>
+            </div>
+
+            <!-- Image Card (MEME CARD STYLE) --><div class="w-full lg:w-1/2 p-6 bg-x-card/70 rounded-3xl shadow-2xl border-4 border-primary-yellow order-1 lg:order-2 transition duration-500 hover:border-secondary-white">
+                <h1 class="text-4xl font-extrabold mb-4 text-center text-primary-yellow" data-i18n="official_photo">OFFICIAL CEO PHOTO</h1>
+                <!-- Image with intense border/glow on hover --><img 
+                    src="https://pbs.twimg.com/media/G3tISGVXUAASLct?format=png&name=small" 
+                    alt="Flōki the Dog, CEO of 𝕏" 
+                    class="w-full h-auto object-cover rounded-2xl border-4 border-x-dark shadow-2xl shadow-primary-yellow/60 transition duration-500 hover:scale-[1.02] hover:border-primary-yellow"
+                    onerror="this.src='https://placehold.co/600x600/FCD535/000000?text=CEO+NOT+FOUND';"
+                >
+                <p class="text-center text-sm mt-3 text-secondary-white font-bold italic" data-i18n="photo_source">Source: The Man, The Legend, The Owner.</p>
+            </div>
+        </section>
+
+        <!-- Featured Post Section (Embedded Tweet) - STRONG HIGHLIGHT --><section id="featured-post" class="mb-16 pt-10 border-t-4 border-primary-yellow">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-primary-yellow inline-block px-4 py-2 bg-x-card/70 rounded-lg border border-x-grey" data-i18n="musk_announcement">ELON MUSK'S HISTORIC ANNOUNCEMENT</h2>
+            </div>
+            
+            <!-- Embedded Tweet Block with glowing border and explicit border class --><div class="flex justify-center">
+                <blockquote class="twitter-tweet w-full max-w-md bg-x-card rounded-xl tweet-highlight border-4 border-primary-yellow" data-dnt="true" data-theme="dark">
+                    <!-- The specific tweet URL --><a href="https://twitter.com/elonmusk/status/1980216257069945132"></a>
+                </blockquote>
+            </div>
+        </section>
+        
+        <!-- LORE/ABOUT SECTION (MOVED UP AND STYLED) --><section class="pt-8 mb-16 border-t-4 border-primary-yellow">
+            <div id="lore" class="bg-x-card p-8 rounded-3xl border-4 border-primary-yellow shadow-2xl shadow-primary-yellow/50 transition duration-500 mx-auto">
+                
+                <div class="text-center mb-6">
+                    <h2 class="text-4xl font-black text-primary-yellow uppercase inline-block px-4 py-2 bg-x-card/70 rounded-lg border border-x-grey" data-i18n="lore_title">THE RISE OF CEO FLŌKI</h2>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <!-- Lore Image (Left Side) - Now 1:1 Aspect Ratio --><div class="w-full md:w-1/3 flex-shrink-0">
+                        <div class="relative w-full pb-[100%] rounded-xl overflow-hidden border-4 border-x-dark shadow-lg shadow-primary-yellow/50">
+                            <img 
+                                src="https://pbs.twimg.com/media/G3uJ2tsWoAAxexx?format=jpg&name=large" 
+                                alt="Floki sitting at the CEO's desk" 
+                                class="absolute top-0 left-0 w-full h-full object-cover" 
+                                onerror="this.src='https://placehold.co/400x400/FCD535/000000?text=CEO+DESK+PHOTO';"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Lore Text (Right Side) --><div class="w-full md:w-2/3">
+                        <p class="text-secondary-white leading-relaxed font-bold mb-4 text-lg" data-i18n="lore_p1">
+                            On Elon Musk’s X platform, a new leader was crowned. Flōki, the Shiba Inu, was appointed CEO, symbolizing a shift towards memetic and decentralized culture. We have tokenized this monumental corporate takeover and brought it to the BNB Chain.
+                        </p>
+                        <p class="text-secondary-white leading-relaxed font-bold mb-6 text-lg" data-i18n="lore_p2">
+                            $FLŌKI is not just a digital asset; it is your new boss. By holding $FLŌKI, you are a shareholder in the CEO’s vision, and you officially report to the Chief Memetic Officer. Join the leadership team.
+                        </p>
+                        <a href="https://x.com/i/communities/1980230202283217168" target="_blank" class="text-primary-yellow hover:underline font-black inline-block text-xl transform hover:scale-105 transition" data-i18n="lore_join">JOIN THE REVOLUTION NOW →</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Image Gallery Section - Meme Grid (MOVED HERE) --><section id="gallery" class="mb-16 pt-10 border-t-4 border-primary-yellow">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-primary-yellow inline-block px-4 py-2 bg-x-card/70 rounded-lg border border-x-grey" data-i18n="memes_header">MEMES & SHOTS FIRED</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://pbs.twimg.com/media/G3tEj4CXkAA2n9O?format=jpg&name=small" alt="Floki meme moment 1" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
+                <img src="https://pbs.twimg.com/media/G3tEC2TXoAE8Jcn?format=jpg&name=small" alt="Floki meme moment 2" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
+                <img src="https://pbs.twimg.com/media/G3s_arKWwAA8MmM?format=jpg&name=small" alt="Floki meme moment 3" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
+                <img src="https://pbs.twimg.com/media/G3tGQI2XgAA5IL_?format=jpg&name=small" alt="Floki meme moment 4" class="w-full h-auto object-cover rounded-xl shadow-lg border-4 border-x-dark transition duration-300 hover:border-primary-yellow hover:scale-105 cursor-pointer aspect-square">
+            </div>
+        </section>
+
+
+        <!-- Live Chart Section (Full Width, Prominent) --><section id="chart" class="pt-10 mb-16 border-t-4 border-primary-yellow">
+            <div class="text-center mb-6">
+                <h2 class="text-4xl font-black text-primary-yellow drop-shadow-lg inline-block px-4 py-2 bg-x-card/70 rounded-lg border border-x-grey" data-i18n="chart_header">LIVE CHART - WHERE THE MAGIC HAPPENS</h2>
+            </div>
+            <div class="bg-x-card p-4 rounded-3xl border-8 border-primary-yellow shadow-[0_0_50px_rgba(252,213,53,0.7)]">
+                <!-- Dexscreener Embed --><div id="dexscreener-embed">
+                    <iframe src="https://dexscreener.com/bsc/0x413581B5Ca80819C16f71B78712234e0d362dfad?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
+                </div>
+            </div>
+            
+            <!-- Quick links below the chart --><div class="mt-8 flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8 font-extrabold">
+                <a href="https://dexscreener.com/bsc/0x413581B5Ca80819C16f71B78712234e0d362dfad" target="_blank" class="text-secondary-white text-lg hover:text-x-dark p-3 rounded-xl bg-x-card border-2 border-primary-yellow hover:bg-primary-yellow transition transform hover:scale-105 text-center" data-i18n="chart_full">FULL CHART VIEW</a>
+                <a href="#" class="text-x-dark text-lg hover:text-secondary-white p-3 rounded-xl bg-primary-yellow border-2 border-x-dark hover:bg-yellow-700 transition transform hover:scale-105 text-center" data-i18n="chart_buy">BUY ON PANCAKESWAP</a>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer (SIMPLIFIED) --><footer class="w-full mt-16 py-6 border-t border-primary-yellow text-center text-sm text-secondary-white bg-accent-dark">
+        <p data-i18n="footer_copyright">&copy; 2025 Flōki, CEO of 𝕏. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Twitter Widgets Script for embedding the tweet --><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <!-- JavaScript for Copy Functionality and i18n --><script>
+        // Define the token address globally for the copy function
+        const TOKEN_ADDRESS = '0x4444c1aC17b779b221E410a94F218f44b8862101';
+        const ORIGINAL_COPY_ICON = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V5"></path></svg>`;
+        const COPIED_ICON = `<svg class="w-4 h-4 text-primary-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+
+
+        // --- i18n Translation Logic ---
+        const translations = {
+            en: {
+                title: 'Flōki, CEO of 𝕏 | THE MEME HYPERSPACE',
+                boss: 'THE BOSS',
+                chart: 'THE CHART',
+                lore: 'THE LORE',
+                announcement: 'ANNOUNCEMENT',
+                memes: 'MEMES',
+                lang_button: '中文 / MANDARIN',
+                marquee: 'ELON MUSK HAS CHOSEN! THE OFFICIAL X CEO: $FLŌKI. THE MEME BOSS OF THE BNB CHAIN! GRAB $FLŌKI NOW! ELON MUSK HAS CHOSEN! THE OFFICIAL X CEO: $FLŌKI. THE MEME BOSS OF THE BNB CHAIN! GRAB $FLŌKI NOW!',
+                headline: 'THE X CEO IS $FLŌKI',
+                subtext_1: "Elon Musk has officially announced the new CEO of X, and it's the memetic legend: Flōki. This token is the BNB Chain's tribute to that historic moment.",
+                subtext_2: 'The leadership has spoken. The new era is here.',
+                buy_button: 'BUY $FLŌKI NOW',
+                official_photo: 'OFFICIAL CEO PHOTO',
+                photo_source: 'Source: The Man, The Legend, The Owner.',
+                musk_announcement: "ELON MUSK'S HISTORIC ANNOUNCEMENT",
+                memes_header: 'MEMES & SHOTS FIRED',
+                chart_header: 'LIVE CHART - WHERE THE MAGIC HAPPENS',
+                chart_full: 'FULL CHART VIEW',
+                chart_buy: 'BUY ON PANCAKESWAP',
+                lore_title: 'THE RISE OF CEO FLŌKI',
+                lore_p1: "On Elon Musk’s X platform, a new leader was crowned. Flōki, the Shiba Inu, was appointed CEO, symbolizing a shift towards memetic and decentralized culture. We have tokenized this monumental corporate takeover and brought it to the BNB Chain.",
+                lore_p2: "$FLŌKI is not just a digital asset; it is your new boss. By holding $FLŌKI, you are a shareholder in the CEO’s vision, and you officially report to the Chief Memetic Officer. Join the leadership team.",
+                lore_join: 'JOIN THE REVOLUTION NOW →',
+                footer_copyright: '© 2025 Flōki, CEO of 𝕏. All Rights Reserved.',
+            },
+            zh: {
+                title: 'Flōki，X的首席执行官 | 模因超空间',
+                boss: '老板',
+                chart: '图表',
+                lore: '背景故事',
+                announcement: '公告',
+                memes: '模因',
+                lang_button: 'ENGLISH / 英语',
+                marquee: '埃隆·马斯克已选定！X的官方CEO：$FLŌKI。BNB链上的模因之王！立即购买$FLŌKI！埃隆·马斯克已选定！X的官方CEO：$FLŌKI。BNB链上的模因之王！立即购买$FLŌKI！',
+                headline: 'X的CEO就是 $FLŌKI',
+                subtext_1: '埃隆·马斯克正式宣布了X的新任CEO，正是这位模因传奇：Flōki。这个代币是对这一历史性时刻在BNB链上的致敬。',
+                subtext_2: '领导层已发声。新时代已经到来。',
+                buy_button: '立即购买 $FLŌKI',
+                official_photo: '官方CEO照片',
+                photo_source: '来源：那个男人，那个传奇，那个所有者。',
+                musk_announcement: '埃隆·马斯克的历史性公告',
+                memes_header: '模因和猛料发布',
+                chart_header: '实时图表 - 奇迹发生之地',
+                chart_full: '查看完整图表',
+                chart_buy: '在PancakeSwap上购买',
+                lore_title: 'CEO Flōki的崛起',
+                lore_p1: '在埃隆·马斯克的X平台上，一位新的领导者加冕。柴犬Flōki被任命为CEO，象征着向模因和去中心化文化的转变。我们已将这一重大的公司收购事件代币化，并带到BNB链上。',
+                lore_p2: '$FLŌKI不仅仅是一种数字资产；它还是你的新老板。持有$FLŌKI，你就是CEO愿景的股东，并正式向首席模因官汇报。加入领导团队吧。',
+                lore_join: '立即加入革命 →',
+                footer_copyright: '© 2025 Flōki, 𝕏的CEO。保留所有权利。',
+            }
+        };
+
+        let currentLang = 'en';
+
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            const langData = translations[currentLang];
+
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (langData[key]) {
+                    // Handle special cases for title and button
+                    if (el.tagName === 'TITLE') {
+                        document.title = langData[key];
+                    } else if (el.tagName === 'A' && el.classList.contains('font-black')) {
+                        // Special handling for the Lore 'JOIN' link
+                        el.innerHTML = langData[key];
+                    } else {
+                        el.textContent = langData[key];
+                    }
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            applyTranslations();
+            // Re-run tweet widget script to ensure the embedded tweet respects the language change
+            twttr.widgets.load(); 
+        }
+
+        function copyAddress() {
+            const copyButton = document.getElementById('header-copy-btn');
+            
+            // Use document.execCommand('copy') as it's more reliable in iframe environments
+            const tempInput = document.createElement('input');
+            tempInput.value = TOKEN_ADDRESS;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Change button icon to show confirmation
+            copyButton.innerHTML = COPIED_ICON;
+            
+            setTimeout(() => {
+                copyButton.innerHTML = ORIGINAL_COPY_ICON;
+            }, 2000);
+        }
+
+        function scrollToChart() {
+            document.getElementById('chart').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Apply translations on initial load
+        document.addEventListener('DOMContentLoaded', applyTranslations);
+    </script>
+
+</body>
+</html>
